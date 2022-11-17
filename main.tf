@@ -1,7 +1,7 @@
 # Green/Blue deployment
 
 provider "aws" {
-  region     = "eu-central-1"
+  region     = var.region
   access_key = var.aws_public
   secret_key = var.aws_secrete
 }
@@ -24,7 +24,7 @@ resource "aws_security_group" "web" {
   name   = "Dynamic Security Group"
   vpc_id = aws_default_vpc.default.id
   dynamic "ingress" {
-    for_each = ["80", "443"]
+    for_each = var.opened_ports
     content {
       from_port   = ingress.value
       to_port     = ingress.value
@@ -48,7 +48,7 @@ resource "aws_security_group" "web" {
 resource "aws_launch_configuration" "web" {
   name_prefix     = "WebServer-Higly-Available-LC"
   image_id        = data.aws_ami.latest_amazon_linux.id
-  instance_type   = "t2.micro"
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.web.id]
   user_data       = file("user-data.sh")
 
