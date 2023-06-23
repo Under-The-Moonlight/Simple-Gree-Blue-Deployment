@@ -1,6 +1,6 @@
-# Simple-Green-Blue-Deployment
+# Zero-Downtime-Server
 
-This is simple Green/Blue Deployment using terraform and AWS
+This is Zero Downtime Server using terraform and AWS
 
 ## Run instruction
 
